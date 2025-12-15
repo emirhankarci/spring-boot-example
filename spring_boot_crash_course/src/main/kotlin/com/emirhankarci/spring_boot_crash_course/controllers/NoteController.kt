@@ -4,7 +4,9 @@ import com.emirhankarci.spring_boot_crash_course.controllers.NoteController.Note
 import com.emirhankarci.spring_boot_crash_course.database.model.Note
 import com.emirhankarci.spring_boot_crash_course.database.repository.NoteRepository
 import org.bson.types.ObjectId
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -61,6 +63,14 @@ class NoteController(
         return repository.findByOwnerId(ObjectId(ownerId)).map {
             it.toResponse()
         }
+    }
+
+
+    @DeleteMapping(path= ["/{id}"])
+    fun deleteByOwnerId(
+        @PathVariable id: String
+    ){
+        repository.deleteById(ObjectId(id))
     }
 
 }
